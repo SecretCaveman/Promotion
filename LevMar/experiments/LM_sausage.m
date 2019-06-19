@@ -1,0 +1,52 @@
+function [p,reg]=diri_BER_LevMar()
+%% parameters of the forward problem
+p.op_name = 'DirichletOp';
+p.syntheticdata_flag = true;
+p.kappa = 1;     % wave number
+p.wSL = -1i*p.kappa; 
+p.wDL = 1;
+% directions of incident waves
+N_inc = 8;
+t=2*pi*[0:N_inc-1]/N_inc;
+%t = 0.5;
+p.inc_directions = [cos(t);sin(t)];
+
+N_meas = 20;
+t= 2*pi*[0:N_meas-1]/N_meas;
+p.N_ieq = 128;
+p.sobo_Index = 0;
+p.meas_directions = [cos(t); sin(t)];
+p.plotWhat.field = false;
+p.plotWhat.ptsx = 60;
+p.plotWhat.ptsy = 60;
+p.plotWhat.plots = 'X';
+
+p.bd_type = 'ThetaPolygonCurve';%'ThetaPolygonCurve';GenTrig
+
+p.true_curve = 'Curve_Sausage210';
+p.noiselevel = 0.050;
+p.N_FK = 100;
+p.init_guess = init_circle(p.N_FK,2,[0,0]);
+
+%p.true_curve = 'Curve_Sausage210';
+%p.noiselevel = 0.050;
+%p.N_FK = 100;
+%p.init_guess = init_circle(p.N_FK,2);
+
+%t= 2*pi*[1:p.N_FK]'/(2*p.N_FK);
+%p.init_guess = [cos(t);sin(t)];
+%'peanut','round_rect', 'apple',
+%'three_lobes','pinched_ellipse','smoothed_rectangle','nonsym_shape'
+
+%% parameters of the regularization method
+reg.method = 'BER_LevMar';%'BERGNM';IRGNM_CG
+
+reg.alpha0 = 1e-4;
+reg.alpha_step = 2/3;
+
+reg.stoprule_par.N_max_it = 50;
+reg.stoprule_par.tau = 1.0001;
+
+reg.max_GN_steps = 1;
+
+end
