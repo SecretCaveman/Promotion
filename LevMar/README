@@ -1,0 +1,4 @@
+This requires T.Hohages "itreg" package to work. 
+Copy the "BER_LevMar" file from this folder to "itreg/inversion_methods/iteration_schemes"
+The parameter files from the "experiments" subfolder go into "itreg/forward_problems/obstacles2d/experiments" 
+and can then be run, as usual, by calling "main(filename)" in "itreg/forward_problems/obstacles2d"
